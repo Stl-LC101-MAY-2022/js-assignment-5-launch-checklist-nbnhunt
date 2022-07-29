@@ -30,7 +30,8 @@ function validateInput(testInput) {
 
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-    
+    let pilotLiteral = document.querySelector("input[name=pilotName]");
+    let copilotLiteral = document.querySelector("input[name=copilotName]");
     
     if (validateInput(pilot) === "Not a Number" && validateInput(copilot) === "Not a Number" && validateInput(fuelLevel) === "Is a Number" && validateInput(fuelLevel) === "Is a Number") {
         document.getElementById("faultyItems").style.visibility = "visible";
@@ -56,31 +57,16 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     }
 
     if (launchStatus.innerHTML = "Shuttle Not Ready for Launch") {
-        pilotStatus.textContent = `Pilot ${pilotName.value} is ready for launch`;
-        copilotStatus.textContent = `Co-pilot ${copilotName.value} is ready for launch`;
+        pilotStatus.textContent = `Pilot ${pilot} is ready for launch`;
+        copilotStatus.textContent = `Co-pilot ${copilot} is ready for launch`;
     }
     
-    
-    //console.log("hi");
-    
-   // update the shuttle requirements => the < div id=faultyItems> using template literals
-
-//    if (validateInput(pilot) === "Not a Number") {
-//     faultyItems.style.visibility = "visible";
-//     pilotStatus.innerHTML = pilotName.value;
-//     console.log(pilot);
-//    }
-//    console.log(copilot.value);
-//    console.log(fuelLevel.value);
-//    console.log(cargoLevel.value);
-   
-   // console.log(validateInput(copilot));
-   
-//    if (validateInput(copilot) === "Not a Number") {
-//     copilotStatus.innerHTML = copilotName.value;
-//     console.log(pilotName.value);
-    
-//    }
+    if (fuelStatus.innerHTML === "Fuel level high enough for launch" && cargoStatus.innerHTML === "Cargo mass low enough for launch") {
+        launchStatus.innerHTML = "Shuttle is Ready for Launch";
+        launchStatus.style.color = "rgb(65, 159, 106)";
+        pilotStatus.textContent = `Pilot ${pilot} is ready for launch`;
+        copilotStatus.textContent = `Co-pilot ${copilot} is ready for launch`;    
+    }
 
 
 
