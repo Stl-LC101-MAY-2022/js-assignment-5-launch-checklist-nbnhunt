@@ -18,20 +18,70 @@ require('isomorphic-fetch');
 //    */
 // }
 
-// so the first if statement doesn't return the right thing, because it's not testing for a negative, it's just the function taking a parameter...
 function validateInput(testInput) {
-    if (isNaN(testInput)) {
-        return("Not a Number"); 
-    } 
-    if (isNaN('')) {
-        return("Empty");
+    if (testInput === '') {
+        return "Empty";
+    } else if (isNaN(testInput)) {
+        return "Not a Number";
+    } else {
+        return "Is a Number";
     }
-    return("Is a Number");
 }
 
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-   // if the form is submitted and passes through script, this function will take in a document as a parameter, with strings representing form inputs, and updating the <div id=faultyItems> list using template literals
+    
+    
+    if (validateInput(pilot) === "Not a Number" && validateInput(copilot) === "Not a Number" && validateInput(fuelLevel) === "Is a Number" && validateInput(fuelLevel) === "Is a Number") {
+        document.getElementById("faultyItems").style.visibility = "visible";
+    } else {
+        alert("Make sure to enter valid information for each field!");
+    }
+    
+    if (validateInput(fuelLevel) === "Is a Number" && fuelLevel < 10000) {
+        fuelStatus.innerHTML = "Fuel level too low for launch";
+    } else if (validateInput(fuelLevel) === "Is a Number" && fuelLevel >= 10000) {
+        fuelStatus.innerHTML = "Fuel level high enough for launch";
+    }
+
+    if (validateInput(cargoStatus) === "Is a Number" && cargoLevel > 10000) {
+        cargoStatus.innerHTML = "Cargo mass too heavy for launch";
+    } else {
+        cargoStatus.innerHTML = "Cargo mass low enough for launch";
+    }
+
+    if (fuelStatus.innerHTML === "Fuel level too low for launch" || cargoStatus.innerHTML === "Cargo mass too heavy for launch") {
+        launchStatus.innerHTML = "Shuttle Not Ready for Launch";
+        launchStatus.style.color = "rgb(199, 37, 78)";
+    }
+
+    if (launchStatus.innerHTML = "Shuttle Not Ready for Launch") {
+        pilotStatus.textContent = `Pilot ${pilotName.value} is ready for launch`;
+        copilotStatus.textContent = `Co-pilot ${copilotName.value} is ready for launch`;
+    }
+    
+    
+    //console.log("hi");
+    
+   // update the shuttle requirements => the < div id=faultyItems> using template literals
+
+//    if (validateInput(pilot) === "Not a Number") {
+//     faultyItems.style.visibility = "visible";
+//     pilotStatus.innerHTML = pilotName.value;
+//     console.log(pilot);
+//    }
+//    console.log(copilot.value);
+//    console.log(fuelLevel.value);
+//    console.log(cargoLevel.value);
+   
+   // console.log(validateInput(copilot));
+   
+//    if (validateInput(copilot) === "Not a Number") {
+//     copilotStatus.innerHTML = copilotName.value;
+//     console.log(pilotName.value);
+    
+//    }
+
 
 
 }
