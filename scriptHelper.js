@@ -1,22 +1,23 @@
 // // Write your helper functions here!
 require('isomorphic-fetch');
 
+// This is the format of the innerHTML for the missionTarget div, which you can locate using the document parameter of addDestinationInfo(). addDestinationInfo() does not need to return anything.
 
-
-// function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
-//    // Here is the HTML formatting for our mission target div.
-//    /*
-//                 <h2>Mission Destination</h2>
-//                 <ol>
-//                     <li>Name: </li>
-//                     <li>Diameter: </li>
-//                     <li>Star: ${star}</li>
-//                     <li>Distance from Earth: </li>
-//                     <li>Number of Moons: </li>
-//                 </ol>
-//                 <img src="">
-//    */
-// }
+function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
+   // Here is the HTML formatting for our mission target div.
+   let missionTarget = document.getElementById("missionTarget");
+   missionTarget.innerHTML = 
+                `<h2>Mission Destination</h2>
+                <ol>
+                    <li>Name: </li>
+                    <li>Diameter: </li>
+                    <li>Star: ${star}</li>
+                    <li>Distance from Earth: </li>
+                    <li>Number of Moons: </li>
+                </ol>
+                <img src="">`;
+   
+};
 
 function validateInput(testInput) {
     if (testInput === '') {
@@ -31,8 +32,7 @@ function validateInput(testInput) {
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     
-    
-    if (validateInput(pilot) === "Not a Number" && validateInput(copilot) === "Not a Number" && validateInput(fuelLevel) === "Is a Number" && validateInput(fuelLevel) === "Is a Number") {
+    if (validateInput(pilot) === "Not a Number" && validateInput(copilot) === "Not a Number" && validateInput(fuelLevel) === "Is a Number" && validateInput(cargoLevel) === "Is a Number") {
         document.getElementById("faultyItems").style.visibility = "visible";
     } else {
         alert("Make sure to enter valid information for each field!");
@@ -44,7 +44,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         fuelStatus.innerHTML = "Fuel level high enough for launch";
     }
 
-    if (validateInput(cargoStatus) === "Is a Number" && cargoLevel > 10000) {
+    if (validateInput(cargoLevel) === "Is a Number" && cargoLevel > 10000) {
         cargoStatus.innerHTML = "Cargo mass too heavy for launch";
     } else {
         cargoStatus.innerHTML = "Cargo mass low enough for launch";
@@ -56,47 +56,40 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     }
 
     if (launchStatus.innerHTML = "Shuttle Not Ready for Launch") {
-        pilotStatus.textContent = `Pilot ${pilotName.value} is ready for launch`;
-        copilotStatus.textContent = `Co-pilot ${copilotName.value} is ready for launch`;
+        pilotStatus.textContent = `Pilot ${pilot} is ready for launch`;
+        copilotStatus.textContent = `Co-pilot ${copilot} is ready for launch`;
     }
     
-    
-    //console.log("hi");
-    
-   // update the shuttle requirements => the < div id=faultyItems> using template literals
-
-//    if (validateInput(pilot) === "Not a Number") {
-//     faultyItems.style.visibility = "visible";
-//     pilotStatus.innerHTML = pilotName.value;
-//     console.log(pilot);
-//    }
-//    console.log(copilot.value);
-//    console.log(fuelLevel.value);
-//    console.log(cargoLevel.value);
-   
-   // console.log(validateInput(copilot));
-   
-//    if (validateInput(copilot) === "Not a Number") {
-//     copilotStatus.innerHTML = copilotName.value;
-//     console.log(pilotName.value);
-    
-//    }
-
-
+    if (fuelStatus.innerHTML === "Fuel level high enough for launch" && cargoStatus.innerHTML === "Cargo mass low enough for launch") {
+        launchStatus.innerHTML = "Shuttle is Ready for Launch";
+        launchStatus.style.color = "rgb(65, 159, 106)";
+        pilotStatus.textContent = `Pilot ${pilot} is ready for launch`;
+        copilotStatus.textContent = `Co-pilot ${copilot} is ready for launch`;    
+    }
 
 }
 
-// async function myFetch() {
-//     let planetsReturned;
+// when updating <div id=missionTarget> use the format from addDestinationInfo() via pickPlanet() & myFetch(). 
 
-//     planetsReturned = await fetch().then( function(response) {
-//         });
+// myFetch() has some of the code necessary for fetching planetary JSON, however, it is not complete. You need to add the URL and return response.json().
 
-//     return planetsReturned;
-// }
+// name, diameter, star, distance, moons, imageUrl
 
-// function pickPlanet(planets) {
-// }
+async function myFetch() {
+    let planetsReturned;
+
+    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+        response.json()
+        });
+
+    return planetsReturned;
+}
+
+function pickPlanet(planets) {
+    // pickPlanet() takes in one argument: a list of planets. Using Math.random(), return one planet from the list with a randomly-selected index.  myFetch() Math.random()
+    let randPlanet = Math.floor(Math.random() * planets.length);
+    return randPlanet;
+}
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
