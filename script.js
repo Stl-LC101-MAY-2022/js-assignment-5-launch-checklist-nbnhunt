@@ -15,7 +15,7 @@
 
 window.addEventListener("load", function() {
 
-    console.log('print something, dammit!');
+    console.log('print something');
 
     let form = document.querySelector("form");
     let list = document.getElementById("faultyItems");
